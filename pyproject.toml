@@ -1,8 +1,14 @@
 [tool.poetry]
-name = "rock-paper-scissors"
+name = "rps"
 version = "0.1.0"
-description = ""
+description = "The famous Rock Paper Scissors game written in python"
 authors = ["Davide Di Criscito <davide.dicriscito@gmail.com>"]
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
 
 [tool.poetry.dependencies]
 python = "^3.8"
