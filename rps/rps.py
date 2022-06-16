@@ -79,16 +79,19 @@ class TheMimic(Player):
 class TheNonStrategicOne(Player):
     def __init__(self):
         super().__init__()
-        self.my_move_index = 0
+        self.my_move_index = random.randint(0, 3)
         self.name = "The Non-Strategic One"
 
     def move(self):
-        if self.my_move_index == 2:
-            self._my_move_index = 0
-            return moves[self.my_move_index]
-        else:
+        if self.my_move_index == 0:
             self.my_move_index += 1
-            return moves[self.my_move_index]
+            return moves[0]
+        elif self.my_move_index == 1:
+            self.my_move_index += 2
+            return moves[1]
+        else:
+            self.my_move_index = 0
+            return moves[2]
 
 
 class Game:
@@ -104,9 +107,9 @@ class Game:
         self.p2.learn(move2, move1)
 
     def play_game(self):
-        print_pause("Game start!\n")
+        print_pause("\n" "===========" "Game start!" "===========" "\n")
 
-        for round in range(3):
+        for round in range(10):
             print_pause(f"Round {round}:")
             self.play_round()
 
@@ -117,7 +120,7 @@ def computers_battle(players):
     player1 = players[random.randint(0, 3)]
     player2 = players[random.randint(0, 3)]
 
-    game = Game(player1, player2)
+    game = Game(players[2], player2)
     game.play_game()
 
 
@@ -129,13 +132,14 @@ if __name__ == "__main__":
         TheCaothicOne(),
     ]
 
-    print_pause("Welcome to Rock Paper Scissors!")
-    print_pause("1. Do you want to play?")
-    print_pause("2. Do you want to see other playing?")
+    # print_pause("Welcome to Rock Paper Scissors!\n")
+    # print_pause("1. Do you want to play?")
+    # print_pause("2. Do you want to see other playing?")
 
-    choice = validate_input("Type 1 o 2: ", ["1", "2"])
+    # choice = validate_input("Type 1 o 2: ", ["1", "2"])
 
-    if int(choice) == 1:
-        pass
-    else:
-        computers_battle(players)
+    # if int(choice) == 1:
+    #     pass
+    # else:
+    #     computers_battle(players)
+    computers_battle(players)
