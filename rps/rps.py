@@ -1,20 +1,9 @@
 #!/usr/bin/env python3
 
-"""This program plays a game of Rock, Paper, Scissors between two Players,
-and reports both Player's scores each round."""
+import random
+import time
 
 moves = ["rock", "paper", "scissors"]
-
-"""The Player class is the parent class for all of the Players
-in this game"""
-
-
-class Player:
-    def move(self):
-        return "rock"
-
-    def learn(self, my_move, their_move):
-        pass
 
 
 def beats(one, two):
@@ -25,6 +14,83 @@ def beats(one, two):
     )
 
 
+def print_pause(string, sleep=1):
+    print(string)
+    time.sleep(sleep)
+
+
+def validate_input(prompt, options):
+    while True:
+        option = input(prompt).lower()
+
+        if option in options:
+            return option
+
+        print("Sorry, I didn't understand! Try Again!")
+
+
+class Player:
+    def __init__(self):
+        self.my_moves = []
+        self.their_moves = []
+        self.name = None
+
+    def move(self):
+        pass
+
+    def learn(self, my_move, their_move):
+        pass
+
+
+class TheRock(Player):
+    def __init__(self):
+        super().__init__()
+        self.name = "The Rock"
+
+    def move(self):
+        return "rock"
+
+
+class TheCaothicOne(Player):
+    def __init__(self):
+        super().__init__()
+        self.name = "The Chaotic One"
+
+    def move(self):
+        return random.choice(moves)
+
+
+class TheMimic(Player):
+    def __init__(self):
+        super().__init__()
+        self.name = "The Mimic"
+
+    def learn(self, my_move, their_move):
+        self.my_moves.append(my_move)
+        self.their_moves.append(their_move)
+
+    def move(self):
+        try:
+            return self.their_moves[-1]
+        except IndexError:
+            return random.choice(moves)
+
+
+class TheNonStrategicOne(Player):
+    def __init__(self):
+        super().__init__()
+        self.my_move_index = 0
+        self.name = "The Non-Strategic One"
+
+    def move(self):
+        if self.my_move_index == 2:
+            self._my_move_index = 0
+            return moves[self.my_move_index]
+        else:
+            self.my_move_index += 1
+            return moves[self.my_move_index]
+
+
 class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -33,18 +99,43 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f"Player 1: {move1}  Player 2: {move2}")
+        print_pause(f"{self.p1.name}: {move1}  {self.p2.name}: {move2}\n")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
-        print("Game start!")
+        print_pause("Game start!\n")
+
         for round in range(3):
-            print(f"Round {round}:")
+            print_pause(f"Round {round}:")
             self.play_round()
-        print("Game over!")
+
+        print_pause("Game over!")
+
+
+def computers_battle(players):
+    player1 = players[random.randint(0, 3)]
+    player2 = players[random.randint(0, 3)]
+
+    game = Game(player1, player2)
+    game.play_game()
 
 
 if __name__ == "__main__":
-    game = Game(Player(), Player())
-    game.play_game()
+    players = [
+        TheRock(),
+        TheMimic(),
+        TheNonStrategicOne(),
+        TheCaothicOne(),
+    ]
+
+    print_pause("Welcome to Rock Paper Scissors!")
+    print_pause("1. Do you want to play?")
+    print_pause("2. Do you want to see other playing?")
+
+    choice = validate_input("Type 1 o 2: ", ["1", "2"])
+
+    if int(choice) == 1:
+        pass
+    else:
+        computers_battle(players)
