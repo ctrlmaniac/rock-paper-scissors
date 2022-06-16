@@ -2,7 +2,6 @@
 
 import random
 import time
-from unicodedata import name
 
 moves = ["rock", "paper", "scissors"]
 
