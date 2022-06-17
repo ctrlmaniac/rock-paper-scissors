@@ -31,30 +31,30 @@ def validate_input(prompt, options):
 
 class Player:
     def __init__(self):
-        self.my_moves = []
         self.their_moves = []
+        self.my_moves = []
         self.name = None
 
     def move(self):
-        pass
+        return "rock"
 
     def learn(self, my_move, their_move):
         pass
 
 
 class TheRock(Player):
-    def move(self):
-        return "rock"
+    # A player which always plays rock
+    pass
 
 
 class TheCaothicOne(Player):
+    # A Player which plays random moves
     def move(self):
         return random.choice(moves)
 
 
 class TheMimic(Player):
     def learn(self, my_move, their_move):
-        self.my_moves.append(my_move)
         self.their_moves.append(their_move)
 
     def move(self):
@@ -69,12 +69,15 @@ class TheNonStrategicOne(Player):
         super().__init__()
         self.my_move_index = random.randint(0, 3)
 
+    def learn(self, my_move, their_move):
+        self.their_moves.append(their_move)
+
     def move(self):
         if self.my_move_index == 0:
             self.my_move_index += 1
             return moves[0]
         elif self.my_move_index == 1:
-            self.my_move_index += 2
+            self.my_move_index += 1
             return moves[1]
         else:
             self.my_move_index = 0
@@ -106,21 +109,31 @@ class Game:
         if move1 != move2:
             if beats(move1, move2):
                 self.p1_score += 1
+                print("Player One wins")
             else:
                 self.p2_score += 1
+                print("Player Two wins")
+        else:
+            print("Tie!")
 
         print_pause(
             f"Score: Player One {self.p1_score}, "
             + f"Player Two {self.p2_score}\n",
-            3,
         )
 
     def winner(self):
-        winner = (
-            "Player One" if self.p1_score > self.p2_score else "Player Two"
-        )
+        if self.p1_score > self.p2_score:
+            winner = "Player One"
+        elif self.p2_score > self.p1_score:
+            winner = "Player Two"
+        else:
+            winner = "Nobody"
 
         print(f"The winner is: {winner}!")
+        print(
+            f"Score: Player One {self.p1_score}, "
+            + f"Player Two {self.p2_score}\n",
+        )
 
     def play_game(self):
         print_pause("\n===========\nGame start!\n===========\n")
@@ -135,6 +148,9 @@ class Game:
                 (self.p1_score > self.p2_score)
                 or (self.p2_score > self.p1_score)
             ):
+                break
+
+            if self.p1_score == 0 and self.p2_score == 0 and round >= 3:
                 break
 
         self.winner()
