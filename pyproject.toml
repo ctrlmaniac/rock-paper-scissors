@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rps"
-version = "1.0.0"
+version = "1.0.1"
 description = "The famous Rock Paper Scissors game written in python"
 authors = ["Davide Di Criscito <davide.dicriscito@gmail.com>"]
 
