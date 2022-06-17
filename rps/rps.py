@@ -48,12 +48,13 @@ class TheRock(Player):
 
 
 class TheCaothicOne(Player):
-    # A Player which plays random moves
+    # A player which plays random moves
     def move(self):
         return random.choice(moves)
 
 
 class TheMimic(Player):
+    # A player that copies the last opponent move
     def learn(self, my_move, their_move):
         self.their_moves.append(their_move)
 
@@ -65,6 +66,7 @@ class TheMimic(Player):
 
 
 class TheNonStrategicOne(Player):
+    # A player that cycles throught the moves
     def __init__(self):
         super().__init__()
         self.my_move_index = random.randint(0, 3)
@@ -85,6 +87,7 @@ class TheNonStrategicOne(Player):
 
 
 class Human(Player):
+    # A human player
     def move(self):
         choice = validate_input("Your move: rock, paper or scissors? ", moves)
 
