@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Rock Paper Scissor game."""
 
 import random
 import time
@@ -7,6 +8,11 @@ moves = ["rock", "paper", "scissors"]
 
 
 def beats(one, two):
+    """Return whether the one beats two.
+
+    :param one: move 1.
+    :param two: move 2.
+    """
     return (
         (one == "rock" and two == "scissors")
         or (one == "scissors" and two == "paper")
@@ -15,11 +21,17 @@ def beats(one, two):
 
 
 def print_pause(string, sleep=1):
+    """Print a string and then pause the terminal."""
     print(string)
     time.sleep(sleep)
 
 
 def validate_input(prompt, options):
+    """Validate input.
+
+    :param prompt: the input of the user.
+    :param options: the valid options.
+    """
     while True:
         option = input(prompt).lower()
 
@@ -30,35 +42,46 @@ def validate_input(prompt, options):
 
 
 class Player:
+    """Player class."""
+
     def __init__(self):
+        """Inizialize class."""
         self.their_moves = []
         self.my_moves = []
         self.name = None
 
     def move(self):
+        """Deal a ."""
         return "rock"
 
     def learn(self, my_move, their_move):
+        """Learn opponent move."""
         pass
 
 
 class TheRock(Player):
-    # A player which always plays rock
+    """A player which always plays rock."""
+
     pass
 
 
 class TheCaothicOne(Player):
-    # A player which plays random moves
+    """A player which plays random moves."""
+
     def move(self):
+        """Deal a random move."""
         return random.choice(moves)
 
 
 class TheMimic(Player):
-    # A player that copies the last opponent move
+    """A player that copies the last opponent move."""
+
     def learn(self, my_move, their_move):
+        """Learn opponent move."""
         self.their_moves.append(their_move)
 
     def move(self):
+        """Deal the last opponent move."""
         try:
             return self.their_moves[-1]
         except IndexError:
@@ -66,15 +89,19 @@ class TheMimic(Player):
 
 
 class TheNonStrategicOne(Player):
-    # A player that cycles throught the moves
+    """A player that cycles throught the moves."""
+
     def __init__(self):
+        """Inizialize class."""
         super().__init__()
         self.my_move_index = random.randint(0, 3)
 
     def learn(self, my_move, their_move):
+        """Learn opponent move."""
         self.their_moves.append(their_move)
 
     def move(self):
+        """Deal a move."""
         if self.my_move_index == 0:
             self.my_move_index += 1
             return moves[0]
@@ -87,15 +114,24 @@ class TheNonStrategicOne(Player):
 
 
 class Human(Player):
-    # A human player
+    """A human player."""
+
     def move(self):
+        """Ask the user to deal a move."""
         choice = validate_input("Your move: rock, paper or scissors? ", moves)
 
         return choice
 
 
 class Game:
+    """Game class."""
+
     def __init__(self, p1, p2):
+        """Inizialize class.
+
+        :param p1: player 1.
+        :param p2: player 2.
+        """
         self.p1 = p1
         self.p2 = p2
 
@@ -103,6 +139,7 @@ class Game:
         self.p2_score = 0
 
     def play_round(self):
+        """Play a round."""
         move1 = self.p1.move()
         move2 = self.p2.move()
         print_pause(f"Player One: {move1} - Player Two: {move2}")
@@ -125,6 +162,7 @@ class Game:
         )
 
     def winner(self):
+        """Print the winner."""
         if self.p1_score > self.p2_score:
             winner = "Player One"
         elif self.p2_score > self.p1_score:
@@ -139,6 +177,7 @@ class Game:
         )
 
     def play_game(self):
+        """Play the game."""
         print_pause("\n===========\nGame start!\n===========\n")
 
         round = 0
@@ -160,6 +199,7 @@ class Game:
 
 
 def computers_battle(players):
+    """Battle between two random computers."""
     player1 = players[random.randint(0, 3)]
     player2 = players[random.randint(0, 3)]
 
@@ -168,6 +208,7 @@ def computers_battle(players):
 
 
 def human_vs_computer(players):
+    """Human vs computer."""
     player1 = Human()
     player2 = players[random.randint(0, 3)]
 

@@ -1,9 +1,9 @@
-from __future__ import absolute_import
+"""Main module."""
 
 import random
 import time
 
-from rps import (
+from rps.rps import (
     Game,
     TheCaothicOne,
     TheMimic,
