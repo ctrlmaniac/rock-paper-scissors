@@ -8,7 +8,7 @@ packages=[
 ]
 
 [tool.poetry.scripts]
-"ctrlmaniac.rps"="ctrlmaniac.rps.main:play"
+"ctrlmaniac.rps"="ctrlmaniac.rps.play:play"
 
 [tool.black]
 line-length = 79
