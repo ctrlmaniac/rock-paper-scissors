@@ -1,8 +1,14 @@
 [tool.poetry]
-name = "rps"
+name = "ctrlmaniac.rps"
 version = "1.0.2"
 description = "The famous Rock Paper Scissors game written in python"
 authors = ["Davide Di Criscito <davide.dicriscito@gmail.com>"]
+packages=[
+    { include="ctrlmaniac" }
+]
+
+[tool.poetry.scripts]
+"ctrlmaniac.rps"="ctrlmaniac.rsp.main:play"
 
 [tool.black]
 line-length = 79
@@ -12,15 +18,15 @@ profile = "black"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pycodestyle = "^2.8.0"
-flake8 = "^4.0.1"
-black = "^22.3.0"
-isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 pydocstyle = "^6.1.1"
 toml = "^0.10.2"
+isort = "^5.10.1"
+black = "^22.6.0"
+pycodestyle = "^2.8.0"
+flake8 = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
